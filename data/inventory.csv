@@ -1,0 +1,6 @@
+item_id,name,category,quantity,reorder_level,unit_price,supplier,lead_time_days,annual_demand,ordering_cost,holding_cost_per_unit
+A001,Laptop,Electronics,150,20,800.00,TechSupply,5,1200,50.00,80.00
+A002,Mouse,Electronics,300,50,25.00,TechSupply,3,3000,30.00,2.50
+A003,Desk Chair,Furniture,45,10,150.00,OfficeFurnish,7,400,70.00,15.00
+A004,Printer Paper,Office Supplies,500,100,8.00,PaperCo,2,10000,20.00,0.80
+A005,USB Cable,Electronics,200,40,12.00,CableWorld,4,2500,25.00,1.20
