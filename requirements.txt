@@ -1,0 +1,10 @@
+langchain==0.1.0
+langchain-openai==0.0.2
+openai==1.6.1
+faiss-cpu==1.7.4
+streamlit==1.29.0
+pandas==2.1.4
+python-dotenv==1.0.0
+fastapi==0.104.1
+uvicorn==0.24.0
+httpx==0.25.1
