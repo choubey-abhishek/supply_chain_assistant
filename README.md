@@ -1,49 +1,15 @@
-# AI-Powered-Supply-Chain-Assistant
+# AI-Powered Supply Chain Assistant
 
+A RAG-based chatbot for inventory and supply chain queries with agentic workflows.
 
+## Features
+- Semantic search over inventory data
+- Calculations (EOQ, reorder point, forecasting)
+- Real-time mock data simulation
+- Streamlit frontend
 
-
-┌─────────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│   Streamlit     │────▶│   LangChain      │────▶│   OpenAI API    │
-│   Frontend      │◀────│   Agent / Chain  │     │   (LLM)         │
-└─────────────────┘     └────────┬─────────┘     └─────────────────┘
-                                  │
-                        ┌─────────▼─────────┐
-                        │   Tools / Actions │
-                        └─────────┬─────────┘
-                                  │
-            ┌─────────────────────┼─────────────────────┐
-            │                     │                     │
-┌───────────▼──────────┐ ┌────────▼────────┐ ┌─────────▼─────────┐
-│  Vector Store        │ │  Calculator      │ │  Mock API /       │
-│  (RAG retrieval)     │ │  (EOQ, ROP, etc.)│ │  Database         │
-└──────────────────────┘ └─────────────────┘ └───────────────────┘
-
-
-supply-chain-assistant/
-├── .env (local ke liye, GitHub pe mat dal)
-├── .gitignore
-├── runtime.txt
-├── requirements.txt
-├── config.py
-├── app.py
-├── README.md
-├── data/
-│   └── inventory.csv
-└── src/
-    ├── __init__.py
-    ├── agent/
-    │   ├── __init__.py
-    │   ├── agent.py
-    │   └── tools.py
-    ├── rag/
-    │   ├── __init__.py
-    │   ├── document_loader.py
-    │   ├── embeddings.py
-    │   └── vector_store.py
-    ├── api/
-    │   ├── __init__.py
-    │   └── mock_api.py
-    └── utils/
-        ├── __init__.py
-        └── calculations.py
+## Deployment on Render
+1. Set environment variable `OPENAI_API_KEY`.
+2. Build command: `pip install -r requirements.txt`
+3. Start command: `streamlit run app.py --server.port $PORT --server.address 0.0.0.0`
+4. Add `runtime.txt` to pin Python 3.12.6.
