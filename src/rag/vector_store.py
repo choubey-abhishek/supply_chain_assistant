@@ -1,11 +1,9 @@
 import os
 import pickle
-from typing import List
-from langchain.schema import Document
+import numpy as np
 from .embeddings import get_embeddings
 from .document_loader import load_inventory_documents
 from config import VECTOR_STORE_PATH, INVENTORY_CSV_PATH
-import numpy as np
 
 class SimpleVectorStore:
     def __init__(self, documents=None, embeddings=None):
@@ -25,13 +23,10 @@ class SimpleVectorStore:
             return []
         query_vector = self.embeddings.embed_query(query)
         query_vector = np.array(query_vector)
-        
-        # Cosine similarity
         similarities = np.dot(self.vectors, query_vector) / (
-            np.linalg.norm(self.vectors, axis=1) * np.linalg.norm(query_vector)
+            np.linalg.norm(self.vectors, axis=1) * np.linalg.norm(query_vector) + 1e-9
         )
         top_indices = np.argsort(similarities)[-k:][::-1]
-        
         return [self.documents[i] for i in top_indices]
     
     def save_local(self, path):
@@ -52,7 +47,6 @@ class SimpleVectorStore:
 
 def create_vector_store(force_recreate=False):
     embeddings = get_embeddings()
-    
     if os.path.exists(VECTOR_STORE_PATH) and not force_recreate:
         with open(VECTOR_STORE_PATH, 'rb') as f:
             return SimpleVectorStore.load_local(VECTOR_STORE_PATH, embeddings)
