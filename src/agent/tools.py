@@ -1,11 +1,7 @@
-from langchain.tools import BaseTool, StructuredTool, tool
+from langchain.tools import tool
 from langchain.retrievers import BaseRetriever
-from typing import Type, Optional, List
 from pydantic import BaseModel, Field
-import httpx
-import json
 from src.utils.calculations import eoq, reorder_point, simple_moving_average
-from config import MOCK_API_BASE_URL
 
 class RAGToolInput(BaseModel):
     query: str = Field(description="The search query to find inventory information")
@@ -17,10 +13,7 @@ def create_rag_tool(retriever: BaseRetriever):
         docs = retriever.get_relevant_documents(query)
         if not docs:
             return "No relevant inventory records found."
-        # Format results
-        results = []
-        for doc in docs:
-            results.append(doc.page_content)
+        results = [doc.page_content for doc in docs]
         return "\n\n".join(results)
     return rag_tool
 
@@ -68,7 +61,6 @@ class RealTimeDataInput(BaseModel):
 @tool(args_schema=RealTimeDataInput)
 def realtime_tool(item_id: str) -> str:
     """Fetch real-time stock and order information for a given item ID using mock data."""
-    # Mock data directly in the tool (no external API needed)
     mock_db = {
         "A001": {"current_stock": 145, "pending_orders": 20, "in_transit": 50},
         "A002": {"current_stock": 310, "pending_orders": 0, "in_transit": 100},
@@ -78,31 +70,11 @@ def realtime_tool(item_id: str) -> str:
     }
     
     mock_orders = {
-        "A001": [
-            {"date": "2026-02-10", "quantity": 20}, 
-            {"date": "2026-02-05", "quantity": 15},
-            {"date": "2026-01-28", "quantity": 30}
-        ],
-        "A002": [
-            {"date": "2026-02-12", "quantity": 10}, 
-            {"date": "2026-02-08", "quantity": 25},
-            {"date": "2026-02-01", "quantity": 15}
-        ],
-        "A003": [
-            {"date": "2026-02-09", "quantity": 5}, 
-            {"date": "2026-02-03", "quantity": 8},
-            {"date": "2026-01-25", "quantity": 12}
-        ],
-        "A004": [
-            {"date": "2026-02-11", "quantity": 100}, 
-            {"date": "2026-02-04", "quantity": 150},
-            {"date": "2026-01-28", "quantity": 200}
-        ],
-        "A005": [
-            {"date": "2026-02-07", "quantity": 30}, 
-            {"date": "2026-02-01", "quantity": 20},
-            {"date": "2026-01-24", "quantity": 25}
-        ],
+        "A001": [{"date": "2026-02-10", "quantity": 20}, {"date": "2026-02-05", "quantity": 15}],
+        "A002": [{"date": "2026-02-12", "quantity": 10}, {"date": "2026-02-08", "quantity": 25}],
+        "A003": [{"date": "2026-02-09", "quantity": 5}, {"date": "2026-02-03", "quantity": 8}],
+        "A004": [{"date": "2026-02-11", "quantity": 100}, {"date": "2026-02-04", "quantity": 150}],
+        "A005": [{"date": "2026-02-07", "quantity": 30}, {"date": "2026-02-01", "quantity": 20}],
     }
     
     if item_id not in mock_db:
