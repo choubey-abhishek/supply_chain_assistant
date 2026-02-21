@@ -20,40 +20,30 @@
 └──────────────────────┘ └─────────────────┘ └───────────────────┘
 
 
-supply_chain_assistant/
-├── .env                      # API keys, environment variables
+supply-chain-assistant/
+├── .env (local ke liye, GitHub pe mat dal)
 ├── .gitignore
-├── README.md
+├── runtime.txt
 ├── requirements.txt
-├── pyproject.toml            # (optional) for dependency management
-├── app/
-│   ├── __init__.py
-│   ├── main.py               # Streamlit entry point
-│   ├── agent/
-│   │   ├── __init__.py
-│   │   ├── agent.py          # LangChain agent setup
-│   │   └── prompt.py         # System prompt for the agent
-│   ├── tools/
-│   │   ├── __init__.py
-│   │   ├── retrieval.py      # RAG retrieval tool
-│   │   ├── calculator.py     # EOQ, reorder point, etc.
-│   │   └── realtime.py       # Mock API client
-│   ├── rag/
-│   │   ├── __init__.py
-│   │   ├── indexer.py        # Load CSV/JSON, chunk, embed, store
-│   │   ├── retriever.py      # Wrapper for vector store queries
-│   │   └── vector_store.py   # Initialize vector DB
-│   ├── data/
-│   │   ├── inventory.csv     # Your dataset
-│   │   └── demand_history.csv
-│   ├── mock_api/
-│   │   ├── __init__.py
-│   │   ├── server.py         # (optional) Flask/FastAPI mock
-│   │   └── data_generator.py # Generate realistic inventory data
-│   └── utils/
-│       ├── __init__.py
-│       ├── logger.py         # Logging setup
-│       └── metrics.py        # Performance evaluation helpers
-└── tests/                    # Unit tests for each module
-    ├── test_tools.py
-    ├── test_rag.py
+├── config.py
+├── app.py
+├── README.md
+├── data/
+│   └── inventory.csv
+└── src/
+    ├── __init__.py
+    ├── agent/
+    │   ├── __init__.py
+    │   ├── agent.py
+    │   └── tools.py
+    ├── rag/
+    │   ├── __init__.py
+    │   ├── document_loader.py
+    │   ├── embeddings.py
+    │   └── vector_store.py
+    ├── api/
+    │   ├── __init__.py
+    │   └── mock_api.py
+    └── utils/
+        ├── __init__.py
+        └── calculations.py
