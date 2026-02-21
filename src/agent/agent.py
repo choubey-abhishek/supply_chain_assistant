@@ -2,7 +2,12 @@ from langchain.agents import AgentExecutor, create_openai_tools_agent
 from langchain.memory import ConversationBufferMemory
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate, MessagesPlaceholder
-from .tools import create_rag_tool, calculator_tool, realtime_tool
+from src.rag.vector_store import get_retriever
+
+# Retriever ko as a function handle karo
+def retrieve_documents(query: str, k: int = 3):
+    retriever = get_retriever(k=k)
+    return retriever.similarity_search(query, k=k)
 from src.rag.vector_store import get_retriever
 from config import LLM_MODEL, OPENAI_API_KEY
 
