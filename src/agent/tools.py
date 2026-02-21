@@ -67,23 +67,54 @@ class RealTimeDataInput(BaseModel):
 
 @tool(args_schema=RealTimeDataInput)
 def realtime_tool(item_id: str) -> str:
-    """Fetch real-time stock and order information for a given item ID from the mock API."""
-    try:
-        with httpx.Client() as client:
-            stock_resp = client.get(f"{MOCK_API_BASE_URL}/stock/{item_id}")
-            if stock_resp.status_code != 200:
-                return f"Could not fetch real-time data for {item_id}: {stock_resp.text}"
-            stock_data = stock_resp.json()
-            
-            orders_resp = client.get(f"{MOCK_API_BASE_URL}/orders/{item_id}")
-            orders_data = orders_resp.json() if orders_resp.status_code == 200 else {"recent_orders": []}
-            
-            return (
-                f"Real-time data for {item_id}:\n"
-                f"Current stock: {stock_data.get('current_stock')}\n"
-                f"Pending orders: {stock_data.get('pending_orders')}\n"
-                f"In transit: {stock_data.get('in_transit')}\n"
-                f"Recent orders: {orders_data.get('recent_orders')}"
-            )
-    except Exception as e:
-        return f"Error fetching real-time data: {str(e)}"
+    """Fetch real-time stock and order information for a given item ID using mock data."""
+    # Mock data directly in the tool (no external API needed)
+    mock_db = {
+        "A001": {"current_stock": 145, "pending_orders": 20, "in_transit": 50},
+        "A002": {"current_stock": 310, "pending_orders": 0, "in_transit": 100},
+        "A003": {"current_stock": 42, "pending_orders": 15, "in_transit": 0},
+        "A004": {"current_stock": 480, "pending_orders": 200, "in_transit": 500},
+        "A005": {"current_stock": 220, "pending_orders": 30, "in_transit": 0},
+    }
+    
+    mock_orders = {
+        "A001": [
+            {"date": "2026-02-10", "quantity": 20}, 
+            {"date": "2026-02-05", "quantity": 15},
+            {"date": "2026-01-28", "quantity": 30}
+        ],
+        "A002": [
+            {"date": "2026-02-12", "quantity": 10}, 
+            {"date": "2026-02-08", "quantity": 25},
+            {"date": "2026-02-01", "quantity": 15}
+        ],
+        "A003": [
+            {"date": "2026-02-09", "quantity": 5}, 
+            {"date": "2026-02-03", "quantity": 8},
+            {"date": "2026-01-25", "quantity": 12}
+        ],
+        "A004": [
+            {"date": "2026-02-11", "quantity": 100}, 
+            {"date": "2026-02-04", "quantity": 150},
+            {"date": "2026-01-28", "quantity": 200}
+        ],
+        "A005": [
+            {"date": "2026-02-07", "quantity": 30}, 
+            {"date": "2026-02-01", "quantity": 20},
+            {"date": "2026-01-24", "quantity": 25}
+        ],
+    }
+    
+    if item_id not in mock_db:
+        return f"Item {item_id} not found in inventory."
+    
+    stock = mock_db[item_id]
+    orders = mock_orders.get(item_id, [])
+    
+    return (
+        f"📦 **Real-time data for {item_id}**\n\n"
+        f"**Current stock:** {stock['current_stock']} units\n"
+        f"**Pending orders:** {stock['pending_orders']} units\n"
+        f"**In transit:** {stock['in_transit']} units\n"
+        f"**Recent orders:** {orders}"
+    )
