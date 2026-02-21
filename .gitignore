@@ -7,7 +7,5 @@ __pycache__/
 venv/
 env/
 .env.local
-.env.*
-!/.gitignore
 data/faiss_index/
 .DS_Store
