@@ -1,10 +1,8 @@
 from fastapi import FastAPI, HTTPException
-from typing import Dict, List
 
 app = FastAPI(title="Supply Chain Mock API")
 
-# Mock database: item_id -> current stock, pending orders
-mock_db: Dict[str, Dict] = {
+mock_db = {
     "A001": {"current_stock": 145, "pending_orders": 20, "in_transit": 50},
     "A002": {"current_stock": 310, "pending_orders": 0, "in_transit": 100},
     "A003": {"current_stock": 42, "pending_orders": 15, "in_transit": 0},
@@ -20,10 +18,8 @@ async def get_stock(item_id: str):
 
 @app.get("/orders/{item_id}")
 async def get_orders(item_id: str):
-    # Simulate recent orders (last 5)
     if item_id not in mock_db:
         raise HTTPException(status_code=404, detail="Item not found")
-    # Mock order history
     orders = [
         {"date": "2026-02-10", "quantity": 20},
         {"date": "2026-02-05", "quantity": 15},
