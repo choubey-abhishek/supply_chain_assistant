@@ -1,5 +1,4 @@
 import os
-import pickle
 from langchain.vectorstores import FAISS
 from .embeddings import get_embeddings
 from .document_loader import load_inventory_documents
@@ -9,7 +8,7 @@ def create_vector_store(force_recreate=False):
     embeddings = get_embeddings()
     
     if os.path.exists(VECTOR_STORE_PATH) and not force_recreate:
-        vector_store = FAISS.load_local(VECTOR_STORE_PATH, embeddings)
+        vector_store = FAISS.load_local(VECTOR_STORE_PATH, embeddings, allow_dangerous_deserialization=True)
     else:
         documents = load_inventory_documents(INVENTORY_CSV_PATH)
         vector_store = FAISS.from_documents(documents, embeddings)
