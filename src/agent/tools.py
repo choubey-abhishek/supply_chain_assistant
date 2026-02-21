@@ -9,12 +9,10 @@ class RAGToolInput(BaseModel):
 def create_rag_tool(retriever: BaseRetriever):
     @tool(args_schema=RAGToolInput)
     def rag_tool(query: str) -> str:
-        """Retrieve inventory information from the knowledge base using a semantic search query."""
         docs = retriever.get_relevant_documents(query)
         if not docs:
             return "No relevant inventory records found."
-        results = [doc.page_content for doc in docs]
-        return "\n\n".join(results)
+        return "\n\n".join([doc.page_content for doc in docs])
     return rag_tool
 
 class CalculatorInput(BaseModel):
@@ -23,7 +21,6 @@ class CalculatorInput(BaseModel):
 
 @tool(args_schema=CalculatorInput)
 def calculator_tool(operation: str, params: dict) -> str:
-    """Perform supply chain calculations: EOQ, reorder point, or demand forecast."""
     try:
         if operation == "eoq":
             annual_demand = params.get("annual_demand")
@@ -33,7 +30,6 @@ def calculator_tool(operation: str, params: dict) -> str:
                 return "Missing parameters for EOQ."
             result = eoq(annual_demand, ordering_cost, holding_cost)
             return f"EOQ: {result:.2f} units"
-        
         elif operation == "reorder_point":
             lead_time_demand = params.get("lead_time_demand")
             safety_stock = params.get("safety_stock", 0)
@@ -41,7 +37,6 @@ def calculator_tool(operation: str, params: dict) -> str:
                 return "Missing lead_time_demand."
             result = reorder_point(lead_time_demand, safety_stock)
             return f"Reorder point: {result:.2f} units"
-        
         elif operation == "forecast":
             demand_history = params.get("demand_history")
             window = params.get("window", 3)
@@ -49,7 +44,6 @@ def calculator_tool(operation: str, params: dict) -> str:
                 return "Missing demand_history."
             result = simple_moving_average(demand_history, window)
             return f"Forecast for next period: {result:.2f} units"
-        
         else:
             return f"Unknown operation: {operation}"
     except Exception as e:
@@ -60,7 +54,6 @@ class RealTimeDataInput(BaseModel):
 
 @tool(args_schema=RealTimeDataInput)
 def realtime_tool(item_id: str) -> str:
-    """Fetch real-time stock and order information for a given item ID using mock data."""
     mock_db = {
         "A001": {"current_stock": 145, "pending_orders": 20, "in_transit": 50},
         "A002": {"current_stock": 310, "pending_orders": 0, "in_transit": 100},
@@ -68,7 +61,6 @@ def realtime_tool(item_id: str) -> str:
         "A004": {"current_stock": 480, "pending_orders": 200, "in_transit": 500},
         "A005": {"current_stock": 220, "pending_orders": 30, "in_transit": 0},
     }
-    
     mock_orders = {
         "A001": [{"date": "2026-02-10", "quantity": 20}, {"date": "2026-02-05", "quantity": 15}],
         "A002": [{"date": "2026-02-12", "quantity": 10}, {"date": "2026-02-08", "quantity": 25}],
@@ -76,13 +68,10 @@ def realtime_tool(item_id: str) -> str:
         "A004": [{"date": "2026-02-11", "quantity": 100}, {"date": "2026-02-04", "quantity": 150}],
         "A005": [{"date": "2026-02-07", "quantity": 30}, {"date": "2026-02-01", "quantity": 20}],
     }
-    
     if item_id not in mock_db:
-        return f"Item {item_id} not found in inventory."
-    
+        return f"Item {item_id} not found."
     stock = mock_db[item_id]
     orders = mock_orders.get(item_id, [])
-    
     return (
         f"📦 **Real-time data for {item_id}**\n\n"
         f"**Current stock:** {stock['current_stock']} units\n"
