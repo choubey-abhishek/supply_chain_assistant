@@ -6,7 +6,6 @@ def load_inventory_documents(csv_path: str) -> List[Document]:
     df = pd.read_csv(csv_path)
     documents = []
     for _, row in df.iterrows():
-        # Create a descriptive text for each item
         content = (
             f"Item {row['item_id']}: {row['name']} - Category: {row['category']}. "
             f"Quantity: {row['quantity']} units, Reorder Level: {row['reorder_level']}, "
