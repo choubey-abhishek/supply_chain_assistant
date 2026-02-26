@@ -1,0 +1,10 @@
+[theme]
+primaryColor = "#1E88E5"
+backgroundColor = "#0E1117"
+secondaryBackgroundColor = "#262730"
+textColor = "#FAFAFA"
+
+[header]
+logo = "📦"
+title = "SupplyChain AI"
+icon = "📦"
