@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.app.routers import chat, upload
 
-app = FastAPI()
+from app.routers.chat import router as chat_router
+from app.routers.upload import router as upload_router
+
+app = FastAPI(title="Supply Chain Assistant API")
 
 app.add_middleware(
     CORSMiddleware,
@@ -12,9 +14,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(chat.router, prefix="/api")
-app.include_router(upload.router, prefix="/api")
+app.include_router(chat_router, prefix="/api")
+app.include_router(upload_router, prefix="/api")
 
 @app.get("/")
-def home():
+def root():
     return {"status": "running"}
