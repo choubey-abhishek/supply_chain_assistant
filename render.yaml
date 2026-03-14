@@ -7,14 +7,14 @@ services:
     startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: OPENAI_API_KEY
-        sync: false   # ← Set this manually in Render dashboard (secret)
+        sync: false
 
   - type: web
     name: supply-chain-frontend
     runtime: static
     rootDir: frontend
     buildCommand: npm ci && npm run build
-    staticPublishPath: frontend/dist
+    staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
         value: https://supply-chain-backend.onrender.com/api
