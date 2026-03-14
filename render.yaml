@@ -1,11 +1,9 @@
 services:
   - type: web
-    name: supply-chain-backend
+    name: supply-chain-assistant
     runtime: python
-    rootDir: backend
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
-
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
   - type: web
     name: supply-chain-frontend
     runtime: static
