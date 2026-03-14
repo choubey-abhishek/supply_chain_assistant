@@ -7,7 +7,10 @@ app = FastAPI(title="Supply Chain Assistant")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://supply-chain-frontend.onrender.com",  # production
+        "http://localhost:5173"                       # local dev
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
