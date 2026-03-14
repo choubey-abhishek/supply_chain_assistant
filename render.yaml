@@ -4,4 +4,17 @@ services:
     runtime: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false   # ← Set this manually in Render dashboard (secret)
+
+  - type: web
+    name: supply-chain-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://supply-chain-backend.onrender.com/api
