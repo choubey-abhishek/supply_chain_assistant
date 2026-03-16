@@ -12,4 +12,4 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        value: https://supply-chain-backend.onrender.com/api
+        value: https://supply-chain-assistant-4jy2.onrender.com/api
