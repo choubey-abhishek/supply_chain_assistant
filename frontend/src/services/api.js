@@ -1,15 +1,10 @@
 import axios from "axios"
 
-const API = import.meta.env.VITE_API_URL
+const API_URL = "https://supply-chain-assistant-4jy2.onrender.com/api"
 
-export const sendMessage = async (message) => {
-  const res = await axios.post(`${API}/chat`, { message })
-  return res.data
-}
+const api = axios.create({
+  baseURL: API_URL,
+  headers: { "Content-Type": "application/json" }
+})
 
-export const uploadFile = async (file) => {
-  const form = new FormData()
-  form.append("file", file)
-  const res = await axios.post(`${API}/upload`, form)
-  return res.data
-}
+export default api
