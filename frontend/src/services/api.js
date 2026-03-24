@@ -1,9 +1,19 @@
-import axios from "axios"
+import axios from "axios";
 
-const API_URL = "https://supply-chain-assistant-4jy2.onrender.com/api"
+const API = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
 
-const api = axios.create({
-  baseURL: API_URL
-})
+export const sendMessage = (message) =>
+  API.post("/chat", { message });
 
-export default api
+export const uploadFile = (file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  return API.post("/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
