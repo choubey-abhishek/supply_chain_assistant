@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/',                    // Render ke liye yahi chahiye
+  base: '/supply_chain_assistant/'
 })
