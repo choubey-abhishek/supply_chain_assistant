@@ -1,91 +1,59 @@
-Supply Chain Assistant
-AI-Powered Decision Intelligence for Supply Chain Analytics
+# 🚛 Supply Chain Assistant
 
-🌐 Live Application:
-https://supply-chain-frontend-5p65.onrender.com/
+**AI-Powered Decision Intelligence for Supply Chain Analytics**
 
-🧠 Problem Statement
+Transform raw supply chain data into actionable insights using natural language. No SQL. No spreadsheets. Just ask.
 
-Modern supply chains generate massive amounts of operational data, but extracting actionable insights requires technical expertise.
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://github.com/choubey-abhishek/supply_chain_assistant/blob/main/LICENSE)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit%20App-brightgreen)](https://supply-chain-frontend-5p65.onrender.com/)
+[![React](https://img.shields.io/badge/React-18.2+-61DAFB?logo=react)](https://react.dev)
+[![Node.js](https://img.shields.io/badge/Node.js-20+-339933?logo=node.js)](https://nodejs.org)
 
-This project solves that by enabling natural language interaction with structured data, reducing analysis time and improving decision quality.
+---
 
-🚀 Solution
+### 🌐 Live Application
+**Try it now:** [https://supply-chain-frontend-5p65.onrender.com/](https://supply-chain-frontend-5p65.onrender.com/)
 
-Supply Chain Assistant is a full-stack AI application that allows users to:
+---
 
-Query supply chain data using plain English
-Upload CSV datasets for instant analysis
-Generate insights using LLM-powered reasoning
-Identify inefficiencies and optimization opportunities
-🏗️ System Architecture
-Frontend (React)
-     ↓
-API Layer (Express.js)
-     ↓
-AI Processing (OpenAI API)
-     ↓
-Data Handling (CSV Parsing & Analysis)
-⚙️ Key Features
-💬 Conversational AI Interface
-Enables natural language querying of supply chain data
-📂 CSV Data Ingestion Pipeline
-Parses and processes structured datasets for analysis
-📊 Insight Generation Engine
-Extracts patterns, trends, and anomalies
-🔌 REST API Integration
-Modular backend for scalable expansion
-☁️ Cloud Deployment
-Fully deployed on Render
-📊 High-Impact Use Cases
-Inventory Optimization → Reduce overstock & stockouts
-Demand Forecasting Insights → Identify trends & seasonality
-Bottleneck Detection → Locate inefficiencies in logistics
-Data-Driven Decisions → Replace intuition with analytics
-🛠️ Tech Stack
-Layer	Technology
-Frontend	React.js, Axios
-Backend	Node.js, Express.js
-AI Engine	OpenAI API
-Data Layer	CSV Parsing, Data Processing
-Deployment	Render
-📈 Engineering Highlights
-Designed a scalable API architecture separating frontend and backend concerns
-Implemented asynchronous request handling for AI responses
-Built a data ingestion pipeline for structured CSV analysis
-Integrated LLM-based reasoning for contextual insights
-Focused on extensibility for future analytics modules
-🧩 Current Challenges
-⚠️ Frontend rendering issue (blank screen in production)
-⚠️ Latency in AI response (non-streaming responses)
-🎯 Future Roadmap
-🔄 Real-time streaming responses (WebSockets / SSE)
-📊 Interactive dashboard with charts & KPIs
-🔐 Authentication & user sessions
-🗂️ File history & persistent storage
-🤖 Advanced forecasting models (time-series ML)
-🧪 Local Setup
-# Clone repository
-git clone https://github.com/choubey-abhishek/supply_chain_assistant.git
+### 🧠 Problem Statement
+Modern supply chains generate **terabytes** of operational data every day, yet most companies still rely on spreadsheets and SQL experts to extract insights. This creates bottlenecks, delays decisions, and leaves valuable opportunities hidden in the data.
 
-cd supply_chain_assistant
+**Supply Chain Assistant** solves this by letting anyone query complex datasets using plain English.
 
-# Install dependencies
-npm install
+---
 
-# Run backend
-npm run server
+### 🚀 Solution
+A full-stack AI application that turns your supply chain data into intelligent conversations.
 
-# Run frontend
-npm start
-🤝 Contributing
+**You can:**
+- Ask questions in natural language (e.g., “What are the top 5 products with highest stockout risk next month?”)
+- Upload CSV files instantly for analysis
+- Receive LLM-powered insights, trends, and recommendations
+- Identify inefficiencies and optimization opportunities in seconds
 
-Contributions are welcome!
+---
 
-fork → clone → create branch → commit → push → pull request
-📜 License
+### 🏗️ System Architecture
 
-MIT License
+```mermaid
+graph TD
+    subgraph Frontend
+        A[React.js UI<br/>Conversational Interface] 
+    end
 
-👨‍💻 Author
-Abhishek Choubey
+    subgraph Backend
+        B[Express.js API Layer<br/>REST + Async Handlers]
+        C[CSV Parser & Data Processor]
+    end
+
+    subgraph AI_Core
+        D[OpenAI API<br/>GPT-4o Reasoning Engine]
+    end
+
+    A <--> B
+    B <--> C
+    B <--> D
+
+    style A fill:#61DAFB,stroke:#222,color:#222
+    style D fill:#10A37F,stroke:#222,color:#fff
